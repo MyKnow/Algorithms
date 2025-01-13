@@ -11,5 +11,9 @@ sumOfNumbers = 0
 for number in numbers :
     sumOfNumbers += int(number)
 
+# 다른 풀이법 : sum 함수
+# [int] sumOfNumbersWithSumFunction : 각 숫자들의 총 합계를 sum 함수로 구한 것
+sumOfNumbers = sum(map(int, numbers))
+
 # sumOfNumbers을 출력한다
 print(sumOfNumbers)

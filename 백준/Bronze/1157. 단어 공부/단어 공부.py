@@ -1,5 +1,8 @@
+# 빠른 입력을 위한 sys import
+import sys
+
 # [string] word : 알파벳 대소문자로 이루어진 단어 (길이: < 1,000,000)
-word = input()
+word = sys.stdin.read().strip()
 
 # [string] upperWord : 알파벳 대문자로만 이루어진 word
 upperWord = word.upper()

@@ -30,7 +30,6 @@ while(N != 0) {
 if (result.count == 0) {
     print("0")
 } else {
-    for word in result.reversed() {
-        print(word, terminator: "")
-    }
+    // result를 역순으로 출력
+    print(result.reversed().joined())
 }

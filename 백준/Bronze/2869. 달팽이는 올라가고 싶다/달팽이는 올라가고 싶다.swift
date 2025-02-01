@@ -1,0 +1,24 @@
+// [Int] A (immutable): 달팽이가 올라갈 수 있는 거리
+// [Int] B (immutable): 잠을 자는 동안 미끄러지는 거리
+// [Int] V (immutable): 올라가야 하는 거리
+// (범위: 1 <= B < A <= V <= 1,000,000,000)
+let arrayOfInput: Array<Int> = (readLine() ?? "2 1 2").split(separator: " ").map { Int($0) ?? 2}
+let A: Int = arrayOfInput[0]
+let B: Int = arrayOfInput[1]
+let V: Int = arrayOfInput[2]
+
+// 값의 범위가 크다 보니, 단순 반복문으로 해결하면 시간 초과가 발생할 것으로 추측됨.
+// 따라서 계산식을 세워 시간 복잡도를 O(1)로 만들어야 함.
+// 달팽이가 하루에 올라가는 거리는 A - B이다.
+// 하지만, V 이상 올라가면 미끄러지지 않는다.
+//
+// 1. 먼저 V에서 A를 뺀 거리까지 도달하는 날짜를 구한다.
+// D = 올림((V-A)/(A-B))
+// 2. 여기에 1을 더하면, A를 뺀 거리를 다시 채우게 되므로 미끄러짐이 고려되지 않는다.
+// result = D + 1
+
+// [Int] D (immutable): V에서 A를 뺀 거리까지 도달하는 날짜
+let D: Int = ((V-A)/(A-B)) + (((V-A) % (A-B) == 0) ? 0 : 1)
+
+// A를 더 가기 위해 하루를 더한 값을 출력한다.
+print(D+1)

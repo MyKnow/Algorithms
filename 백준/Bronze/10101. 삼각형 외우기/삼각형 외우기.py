@@ -11,9 +11,9 @@ if (all(60 == angle for angle in listOfAngles)):
 elif (sum(listOfAngles) != 180):
     print("Error")
 else:
-    # 같은 각이 없는 경우 부등변 삼각형
-    if (listOfAngles[0] != listOfAngles[1] and listOfAngles[0] != listOfAngles[2] and listOfAngles[1] != listOfAngles[2]):
-        print("Scalene")
-    # 그 이외는 모두 이등변 삼각형
-    else :
+    # 같은 각이 있는 경우 이등변 삼각형
+    if (len(set(listOfAngles)) == 2):
         print("Isosceles")
+    # 그 이외는 모두 부등변 삼각형
+    else :
+        print("Scalene")

@@ -1,7 +1,7 @@
 # [int] n: 가장 아랫부분의 정사각형 개수 (범위: 1 <= n <= 10^9)
 n = int(input())
     
-# [int] lengthOfCoupleStair: 계단처럼 생긴 부분의 길이 * 2
+# [int] lengthOfStair: 계단처럼 생긴 부분의 길이 * 2
 # 마지막 사각형 밑변 전까지의 길이를 계산하는 데 쓰인다.
 lengthOfStair = 3
 

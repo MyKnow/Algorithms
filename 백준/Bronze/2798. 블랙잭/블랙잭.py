@@ -8,7 +8,7 @@ listOfCards = list(map(int, input().split()))
 # listOfCards에 들어있는 카드 중 3개를 골라서 M에 최대한 근접하게 만들고, 그 합을 출력해야 한다.
 # 시간 제한이 넉넉하므로, 삼중 중첩 반복문을 만들어서 모든 경우의 수를 계산하여 리스트에 저장하고, M에 근접한 값을 출력한다.
 
-# [Int] listOfSums: 카드 3개의 합을 저장하는 리스트 (길이: 3)
+# [list(int)] listOfSums: 카드 3개의 합을 저장하는 리스트 (길이: 3)
 listOfSums = []
 
 for first in listOfCards:

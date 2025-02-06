@@ -9,8 +9,11 @@ for number in map(int, input().split()) :
 # [int] M: 입력될 정수의 개수 (범위(자연수): 1 ≤ M ≤ 500,000)
 M = int(input())
 
+result = []
 for number in map(int, input().split()):
     if (number in dictOfCards.keys()):
-        print(1, end = " ")
+        result.append(1)
     else :
-        print(0, end = " ")
+        result.append(0)
+        
+print(" ".join(map(str, result)))

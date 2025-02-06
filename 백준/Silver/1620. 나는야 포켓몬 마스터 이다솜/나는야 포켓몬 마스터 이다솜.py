@@ -6,13 +6,14 @@ import sys
 # 범위(자연수): 1 <= N, M <= 100,000
 N, M = map(int, sys.stdin.readline().split())
 
-# [dict(int, string)] dictOfPocketmon: 입력 받은 포켓몬의 (이름:번호)쌍을 저장하는 사전 (길이: N)
+# [dict(str, str)] dictOfPocketmon: 입력 받은 포켓몬의 (이름, 번호) 또는 (번호, 이름)쌍을 저장하는 사전 (길이: N)
 dictOfPocketmon = dict()
 
 # 포켓몬의 개수만큼 사전을 초기화한다.
 for index in range(1, N+1):
     name = sys.stdin.readline().strip()
     
+    # (이름, 번호) 쌍과 (번호, 이름) 쌍을 동시에 추가한다.
     dictOfPocketmon[name] = index
     dictOfPocketmon[index] = name
 

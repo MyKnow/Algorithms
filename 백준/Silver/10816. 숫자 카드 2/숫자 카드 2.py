@@ -19,8 +19,12 @@ for number in map(int, input().split()) :
 # [int] M: 입력될 정수의 개수 (범위(자연수): 1 ≤ M ≤ 500,000)
 M = int(input())
 
+# [list(str)] listOfResult: 출력할 답을 저장하는 변수
+listOfResult = []
 for number in map(int, input().split()):
     if (number in dictOfCards.keys()):
-        print(dictOfCards[number], end = " ")
+        listOfResult.append(str(dictOfCards[number]))
     else :
-        print(0, end = " ")
+        listOfResult.append("0")
+
+sys.stdout.write(' '.join(listOfResult))

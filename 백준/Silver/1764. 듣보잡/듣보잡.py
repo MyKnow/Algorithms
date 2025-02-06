@@ -1,6 +1,6 @@
 import sys
 
-# input = sys.stdin.readline
+input = sys.stdin.readline
 
 # [int] N, M
 # N: 듣도 못한 사람의 수 
@@ -15,10 +15,10 @@ setOfN = set()
 setOfM = set()
 
 for _ in range(N):
-    setOfN.add(input())
+    setOfN.add(input().strip())
     
 for _ in range(M):
-    setOfM.add(input())
+    setOfM.add(input().strip())
     
 # [set(int)] setOfIntersection: 듣도 보도 못한 사람을 저장하는 집합 (길이: <= N, M)
 setOfIntersection = setOfN.intersection(setOfM)

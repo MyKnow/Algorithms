@@ -1,9 +1,13 @@
+import sys
+
+input = sys.stdin.readline
+
 # [int] T: 테스트 데이터의 개수 
 T = int(input())
 
 for _ in range(T):
     # [list(str)] listOfString: "("와 ")"로 구성된 문자열을 리스트로 변환함.
-    listOfString = list(input())
+    listOfString = list(input().strip())
     
     # [list(str)] stack: "("와 ")"로 구성된 스택
     stack = []

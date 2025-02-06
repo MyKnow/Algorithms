@@ -1,3 +1,7 @@
+import sys
+
+input = sys.stdin.readline
+
 # [int] N: 상근이가 가지고 있는 숫자 카드의 개수 (범위(자연수): 1 ≤ N ≤ 500,000)
 N = int(input())
 

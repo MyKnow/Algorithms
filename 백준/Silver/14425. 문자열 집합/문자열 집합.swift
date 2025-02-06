@@ -3,11 +3,9 @@ let arrayOfInput: Array<Int> = (readLine() ?? "1 1").split(separator: " ").compa
 let (N, M): (Int, Int) = (arrayOfInput[0], arrayOfInput[1])
 
 // [Set<String>] setOfWords (mutable): N개의 문자열을 저장할 집합 (크기: N)
-var setOfWords: Set<String> = Set<String>()
-
-for _ in 0..<N {
-    setOfWords.insert( (readLine() ?? "a") )
-}
+var setOfWords: Set<String> = Set((0..<N).map { _ in
+    (readLine() ?? "a")
+})
     
 // [Int] count (mutable): 집합 S에 포함된 단어의 개수를 저장하는 변수
 var count: Int = 0

@@ -21,6 +21,4 @@ for _ in 0..<n {
 }
 
 // 완성된 로그를 리스트로 변환하고, 내림차순 정렬하여 출력
-for name in setOfNames.sorted(by: >) {
-    print(name)
-}
+print(setOfNames.sorted(by: >).joined(separator: "\n"))

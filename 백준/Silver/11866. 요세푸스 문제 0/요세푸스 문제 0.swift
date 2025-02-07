@@ -34,9 +34,19 @@ struct Deque {
         if (isEmpty) {
             return -1
         }
-        let num: Int = first
+        let num: Int = nums[start]
         start += 1
         return num
+    }
+    
+    mutating func rotate(_ num: Int) {
+        // size가 0일 경우 회전하지 않음
+        guard size > 0 else { return }
+        
+        // 양수로만 값이 들어오기 때문에, left rotation만 구현함.
+        for _ in 0..<num-1 {
+            self.append(self.pop())
+        }
     }
 }
 
@@ -57,9 +67,10 @@ for number in 1...N {
 var result: Array<Int> = [Int]()
 
 while(!originalDQ.isEmpty) {
-    for _ in 0..<K-1 {
-        originalDQ.append(originalDQ.pop())
-    }
+    // 1. deque를 왼쪽으로 K칸 회전시킨다.
+    originalDQ.rotate(K)
+    
+    // 2. 회전된 deque의 첫번째 요소를 pop하여 result에 넣는다.
     result.append(originalDQ.pop())
 }
     

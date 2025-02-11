@@ -4,26 +4,17 @@ input = sys.stdin.readline
 
 # [def(int, int) -> int] getLCM: math.gcd 함수를 쓰지 않고 최소 공배수를 구하는 함수
 def getLCM(a, b):
-    # [int] index: 2부터 나누기 시작한다.
-    index = 2
+    # 최대공약수를 구하기 위한 변수
+    remainA, remainB = a, b
     
-    # [int] gcd: 최소 공약수
-    gcd = 1
-    
-    # a와 b의 서로소가 나올 때까지 공약수로 나눈다.
-    # a, b 중에서 더 작은 수까지만 index를 증가시킨다.
-    while (index <= min(a, b)):
-        # index로 두 수가 모두 나눠지면, a, b, gcd를 업데이트한다.
-        if (a % index == 0 and b % index == 0):
-            a //= index
-            b //= index
-            gcd *= index
-        # 나눠지지 않는다면 index를 1 증가시킨다.
-        else :
-            index += 1
-            
-    # 최대공약수에 서로소인 a, b까지 곱하면 최소 공배수가 된다.
-    return gcd * a * b
+    # 유클리드 호제법을 사용하여 최대 공약수를 구한다.
+    # 더 작은 수를 큰 수에서 나눈 나머지로 계속 대체하면서 반복하면 GCD를 구할 수 있음
+    while (remainA%remainB != 0):
+        remainA, remainB = remainB, remainA % remainB
+        
+    # remainB에 남아있는 값이 GCD임.
+    # 이후 원본 a, b를 곱한 값에 GCD를 나눈 몫이 LCM이 됨.
+    return (a*b) // remainB
 
 
 # [int] T: 테스트 케이스의 개수 (범위(자연수): 1 ≤ T ≤ 1,000)

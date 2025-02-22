@@ -40,17 +40,17 @@ func findIndex(of target: Int, in data: Array<Int>) -> Int {
         // [Int] mid (immutable): 이진 탐색의 가운데 인덱스
         let mid: Int = (left+right) / 2
 
-        // 목표가 mid번째 요소보다 작다면 right를 mid의 위치로 옮김
+        // 목표가 mid번째 요소보다 작다면 right를 mid 전의 위치로 옮김
         if (target < data[mid]) {
             right = mid - 1
         }
-        // 목표가 mid보다 뒤에 있다면 left를 mid 다음자리로 옮김
+        // 목표가 mid 또는 뒤에 있다면 left를 mid 다음자리로 옮김
         else {
             left = mid + 1
         }
     }
 
-    // 끝까지 찾지 못한 경우 left를 반환함 (목표보다 큰 요소의 index)
+    // left를 반환함 (목표보다 큰 요소의 index)
     return left
 }
 

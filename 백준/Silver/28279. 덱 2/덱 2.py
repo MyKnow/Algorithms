@@ -7,10 +7,10 @@ commandList = sys.stdin.readlines()
 # [int] N: 명령어의 수 (범위(자연수): 1 ≤ N ≤ 1,000,000)
 N = int(commandList[0])
 
-# [deque(int)] dq: int를 저장하는 deque
+# [deque(str)] dq: int를 저장하는 deque
 dq = deque()
 
-# [list(int)] result: 각 명령어의 수행 결과를 저장하는 리스트(길이: <= N)
+# [list(str)] result: 각 명령어의 수행 결과를 저장하는 리스트(길이: <= N)
 result = list()
 
 for index in range(1, N+1):
@@ -24,27 +24,27 @@ for index in range(1, N+1):
         
         # 1. appendleft()
         if (splitedCommand[0] == "1"):
-            dq.appendleft(int(splitedCommand[1]))
+            dq.appendleft(splitedCommand[1])
         # 2. append()
         else:
-            dq.append(int(splitedCommand[1]))
+            dq.append(splitedCommand[1])
     # 3. popleft()
     elif (command == "3"):
-        result.append(dq.popleft() if len(dq) != 0 else -1)
+        result.append(dq.popleft() if len(dq) != 0 else "-1")
     # 4. pop()
     elif (command == "4"):
-        result.append(dq.pop() if len(dq) != 0 else -1)
+        result.append(dq.pop() if len(dq) != 0 else "-1")
     # 5. count
     elif (command == "5"):
-        result.append(len(dq))
+        result.append(str(len(dq)))
     # 6. isEmpty
     elif (command == "6"):
-        result.append(1 if len(dq) == 0 else 0)
+        result.append("1" if len(dq) == 0 else "0")
     # 7. left
     elif (command == "7"):
-        result.append(dq[0] if len(dq) != 0 else -1)
+        result.append(dq[0] if len(dq) != 0 else "-1")
     # 8. right
     elif (command == "8"):
-        result.append(dq[-1] if len(dq) != 0 else -1)
+        result.append(dq[-1] if len(dq) != 0 else "-1")
         
-print("\n".join(map(str, result)))
+print("\n".join(result))

@@ -18,7 +18,7 @@ M = int(input())
 C = list(map(int, input().split()))
 
 # [list(int)] listWithoutStack: Stack 부분이 제외된 수열 B를 나타내는 리스트
-listWithoutStack = [B[index] for index, value in enumerate(A) if value == 0]
+listWithoutStack = [B[index] for index in range(N) if A[index] == 0]
 
 # 항상 역출력 하므로 미리 뒤집는다.
 listWithoutStack.reverse()

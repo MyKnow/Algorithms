@@ -1,3 +1,7 @@
+import sys
+
+input = sys.stdin.readline
+
 # [int] N: 자료구조의 개수 (범위(자연수): 1 ≤ N ≤ 100,000)
 N = int(input())
 
@@ -16,16 +20,8 @@ C = list(map(int, input().split()))
 # [list(int)] listWithoutStack: Stack 부분이 제외된 수열 B를 나타내는 리스트
 listWithoutStack = [B[index] for index, value in enumerate(A) if value == 0]
 
-# [int] lenOfDiff: 리스트 B와 C의 길이 차이
-lenOfDiff = len(listWithoutStack) - M
+# 항상 역출력 하므로 미리 뒤집는다.
+listWithoutStack.reverse()
 
-# lenOfDiff가 1 이상인 경우, 리스트 B가 C보다 짧지 않다는 것을 의미하므로 -M까지 역출력한다.
-if (lenOfDiff >= 1):
-    print(" ".join(map(str, listWithoutStack[-M::][::-1])))
-# lenOfDiff가 0인 경우 그대로 역출력한다.
-elif (lenOfDiff == 0):
-    print(" ".join(map(str, listWithoutStack[::-1])))
-# lenOfDiff가 음수인 경우, 리스트 B가 M보다 짧다는 것을 의미하므로, 리스트 B를 역으로 출력하고
-# lenOfDiff만큼 리스트 C를 정방향 출력한다.
-else:
-    print(" ".join(map(str, listWithoutStack[::-1]+C[:abs(lenOfDiff)])))
+# 두 리스트를 합친 다음, 길이 M만큼 출력한다.
+print(" ".join(map(str, (listWithoutStack+C)[:M])))

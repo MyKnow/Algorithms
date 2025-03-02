@@ -2,10 +2,9 @@
 let N: Int = Int(readLine() ?? "1") ?? 1
 
 // [Set<String>] rainbow (mutable): 무지개 댄스를 추는 사람의 집합
-var rainbow = Set<String>()
+// 초기값: ChongChong (처음부터 무지개 댄스를 추는 사람)
+var rainbow: Set<String> = ["ChongChong"]
 
-// ChongChong은 처음부터 무지개 댄스를 춘다.
-rainbow.insert("ChongChong")
 
 for _ in 0..<N {
     // [Array<String>] log (immutable): 만난 두 사람을 저장한 리스트 (길이: 2)
@@ -17,9 +16,7 @@ for _ in 0..<N {
     // 두 사람을 모두 rainbow 집합에 추가함.
     for people in log {
         if (rainbow.contains(people)) {
-            for p in log {
-                rainbow.insert(p)
-            }
+            rainbow.formUnion(log)
             break
         }
     }

@@ -34,7 +34,5 @@ square = [["*" for _ in range(N)] for _ in range(N)]
 makeStar(square, N, 0, 0)
 
 # square를 출력한다.
-for y in range(N):
-    for x in range(N):
-        print(square[y][x], end="")
-    print()
+for row in square:
+    print("".join(row))

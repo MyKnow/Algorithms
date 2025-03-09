@@ -1,5 +1,5 @@
 // [func(inout Array<Int>, Int, Int)] printSequence
-// : 주어진 조건에 맞는 수열을 results에 저장하는 함수
+// : 주어진 조건에 맞는 수열을 출력하는 함수
 // [inout Array<Int>] stack: 현재 DFS로 탐색 중인 수를 저장하는 배열
 // [Int] N: 자연수의 범위 (범위(자연수): 1 ≤ M ≤ N ≤ 8)
 // [Int] M: 수열의 길이 (범위(자연수): 1 ≤ M ≤ N ≤ 8)

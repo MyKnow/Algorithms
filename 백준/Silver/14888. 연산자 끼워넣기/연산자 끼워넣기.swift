@@ -5,7 +5,6 @@
 // [Int] maxDepth
 // [Int] depth
 // [Int] result
-
 func solution(
     _ maxDepth: Int,
     _ depth: Int, 
@@ -33,6 +32,7 @@ func solution(
     }
     
     // [Int] tmpResult (mutable)
+    // Temporary variable for calculation
     var tmpResult: Int = result
     
     // Calculate with backtracking to obtain maxValue and minValue.
@@ -81,13 +81,9 @@ func solution(
     }
 }
     
-    
-            
-
-
-let input: String = readLine() ?? "2"
 
 // [Int] N (immutable): Length of A (range(Integer): 2 ≤ N ≤ 11)
+let input: String = readLine() ?? "2"
 let N: Int = Int(input) ?? 2
 
 // [Array<Int>] A (mutable): List of operand (length: N)

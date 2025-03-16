@@ -17,6 +17,10 @@ def updatelistOfTeams(depth: int, stack: list):
         listOfTeams.append( [set(stack), remaining] )
         
         return
+    
+    # For optimization
+    if stack and stack[0] != 0:
+        return
 
     # [int] start
     # : Define start indexbased on stack length for non-decreasing sort 

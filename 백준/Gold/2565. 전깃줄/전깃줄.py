@@ -1,34 +1,57 @@
 import bisect
 import sys
 
-def getLIS(A):
-    dp = []
-    lisLength = [0] * len(A)
-
-    for i in range(len(A)):
-        idx = bisect.bisect_left(dp, A[i][1])
-
-        if idx == len(dp):
-            dp.append(A[i][1])
-        else:
-            dp[idx] = A[i][1]
-        lisLength[i] = idx + 1
-        
-    return lisLength
-
 input = sys.stdin.readline
 
+# [def(list(tuple)) -> list] getLIS
+# : A function that finds LIS list from typle list to return list: called as lines
+#
+# - Parameters
+# 1. A: list(tuple)
+# description: List of tuples that stores electir wires connected to A and B poles
+# 
+# - Returns
+# 1. lisLength: list
+# description: List of integers that stores the length of LIS obtained from each index
+def getLIS(A: list( (int, int) )):
+    # B: list
+    # description: List of integers to store positions of wires from pole B
+    dp = []
+
+    for i in range(len(A)):
+        # idx: int
+        # Index indicating where the wire can be inserted now
+        idx = bisect.bisect_left(dp, A[i][1])
+
+        # When idx is the last index
+        if idx == len(dp):
+            # Just append it
+            dp.append(A[i][1])
+        else:
+            # Update already existing elements
+            dp[idx] = A[i][1]
+
+    return len(dp)
+
+# N: int
+# description: An integer that represents number of electric wires
 N = int(input())
 
-lines = list()
+# wires: list( (int, int) )
+# description: A list of tuples to store electric wires connected to A and B poles
+wires = list()
 
+# Update wires
 for _ in range(N):
     A, B = map(int, input().split())
 
-    lines.append( (A, B) )
+    wires.append( (A, B) )
 
-lines.sort(key=lambda x: x[0])
+# Sort in ascending order by pole A
+wires.sort(key=lambda x: x[0])
 
-lis = getLIS(lines)
+# Get length of LIS of wires
+lengthOfLIS = getLIS(wires)
 
-print(N-max(lis))
+# Print result
+print(N-lengthOfLIS)

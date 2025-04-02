@@ -1,24 +1,33 @@
-S = input()
+import sys
 
-q = int(input())
+input = sys.stdin.read
+print = sys.stdout.write
 
-pSum = dict()
-for _ in range(q):
-    a, l, r = input().split()
+data = input().split()
+
+S = data[0]
+q = int(data[1])
+queries = data[2:]
+
+pSum = [[0] * (len(S)) for _ in range(26)]
+
+for i in range(len(S)):
+    idx = ord(S[i]) - ord('a')
+
+    pSum[idx][i] = pSum[idx][i-1] + 1
+    for j in range(26):
+        if j != idx:
+            pSum[j][i] = pSum[j][i-1]
+
+results = []
+for c, l, r in zip(queries[0::3], queries[1::3], queries[2::3]):
+    cIdx = ord(c) - ord('a')
     l = int(l)
     r = int(r)
 
-    if a not in pSum:
-        tmpList = list()
-        for c in S:
-            last = 0 if len(tmpList) == 0 else tmpList[-1]
-            if c == a:
-                tmpList.append( last + 1 )
-            else:
-                tmpList.append( last )
-        pSum[a] = tmpList
-
     if l-1 < 0:
-        print(pSum[a][r])
+        results.append(str(pSum[cIdx][r]))
     else:
-        print(pSum[a][r] - pSum[a][l-1])
+        results.append(str(pSum[cIdx][r] - pSum[cIdx][l-1]))
+
+print("\n".join(results))

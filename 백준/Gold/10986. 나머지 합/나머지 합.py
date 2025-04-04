@@ -37,9 +37,9 @@ pSum = 0
 # whose remainder is zero when the sum of consecutive intervals is divided by M
 count = 0
 
-for i in range(N):
+for num in A:
     # Update the pSum to the previous pSum + current number of A
-    pSum += A[i]
+    pSum += num
 
     # Obtain remainder between pSum and M
     remainder = pSum % M
@@ -56,4 +56,4 @@ for i in range(N):
 count += sum(r * (r - 1) // 2 for r in remainders)  
 
 # Print answer
-print(str(count) + "\n")
+print(f"{count}\n")

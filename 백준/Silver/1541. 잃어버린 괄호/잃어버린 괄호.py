@@ -3,33 +3,14 @@ import sys
 input = sys.stdin.readline
 print = sys.stdout.write
 
-exp = input() + " "
+# exp: list(str)
+# description: A list of strings that store each sub expression that splited by "-"
+exp = input().split("-")
 
-if ("-" not in exp):
-    operands = map(int, exp.split("+"))
-    print(f"{sum(operands)}\n")
-elif ("+" not in exp):
-    operands = list(map(int, exp.split("-")))
-    print(f"{operands[0] - sum(operands[1:])}\n")
-else:
-    opStack = []
-    lastOperator = ""
-    op = ""
-    
-    for s in exp:
-        if s.isnumeric():
-            op += s
-        else:
-            if op:
-                opInt = int(op)
-                if lastOperator in ["+", " "]:
-                    if opStack:
-                        opStack[-1] += opInt
-                    else:
-                        opStack.append(opInt)
-                else:
-                    opStack.append(opInt)
-                op = ""
-            lastOperator = s
-            
-    print(f"{opStack[0] - sum(opStack[1:])}\n")
+# splitByPlus: list(list(str))
+# description: 2-Dimensional list of strings that store results of 
+# each sub expression that splited by "+" from exp
+splitByPlus = list(map(sum, map(lambda x: map(int, x.split("+")), exp)))
+
+# Print result of subtracting between each sub expression
+print(f"{splitByPlus[0] - sum(splitByPlus[1:])}\n")

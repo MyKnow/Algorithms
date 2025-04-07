@@ -22,10 +22,10 @@ pSumOfW = [[0 for _ in range(M+1)] for _ in range(N+1)]
 for y in range(1, N+1):
     # line: If the color of the board compartment is Black
     # it is True, otherwise False
-    line = list(map(lambda x: x == "B", [c for c in input().rstrip()]))
+    line = [c == "B" for c in input().rstrip()]
 
     # crtB: Correct color of "black first board" in each index y
-    crtB = (True if y % 2 == 1 else False)
+    crtB = y % 2 == 1
 
     for x in range(1, M+1):
         # If the current color is incorrect, add the sum of 1 and
@@ -51,4 +51,4 @@ for yK in range(K, N+1):
         minValue = min(minValue, sumOfB, sumOfW)
 
 # Print answer
-print(str(minValue)+"\n") 
+print(f"{minValue}\n") 

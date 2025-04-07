@@ -13,7 +13,6 @@ price = prices[0]
 total = 0
 for idx in range(N-1):
     total += price * lengths[idx]
-    if (prices[idx] > prices[idx+1]):
-        price = prices[idx+1]
-        
+    price = min(price, prices[idx+1])
+
 print(f"{total}\n")

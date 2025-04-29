@@ -5,22 +5,18 @@ input = sys.stdin.readline
 def binarySearch(target, lst):
     start = 0
     end = max(lst)
-    best = 0
 
     while(start<=end):
         mid = (start+end) // 2
 
-        sumOfCutted = 0
-        for h in lst:
-            sumOfCutted += ( (h - mid) if h > mid else 0 )
+        total = sum(t - mid for t in trees if t > mid)
 
-        if sumOfCutted >= target:
-            best = mid
+        if total >= target:
             start = mid + 1
         else:
             end = mid - 1
 
-    return best
+    return end
 
 N, M = map(int, input().split())
 

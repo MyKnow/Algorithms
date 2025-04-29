@@ -9,7 +9,7 @@ def binarySearch(target, lst):
     while(start<=end):
         mid = (start+end) // 2
 
-        total = sum(t - mid for t in trees if t > mid)
+        total = sum(h - mid for h in lst if h > mid)
 
         if total >= target:
             start = mid + 1

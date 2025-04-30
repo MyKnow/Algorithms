@@ -4,8 +4,8 @@ if let inputOfN: String = readLine(), let N: Int = Int(inputOfN),
     // Index starts at 1
     var start: Int = 1
 
-    // Last index of B
-    var end: Int = N*N
+    // Kth number isn't be bigger than K
+    var end: Int = K
 
     while (start <= end) {
         let mid: Int = (start+end) / 2

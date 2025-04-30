@@ -27,5 +27,5 @@ if let inputOfN: String = readLine(), let N: Int = Int(inputOfN),
         }
     }
         
-    print(end+1)   
+    print(start)   
 }

@@ -1,16 +1,7 @@
-def binarySearch(lst, target):
-    start = 0
-    end = len(lst)
-    
-    while start < end:
-        mid = (start + end) // 2
-        
-        if lst[mid] < target:
-            start = mid + 1
-        else:
-            end = mid
-            
-    return start
+import sys
+from bisect import bisect_left
+
+input = sys.stdin.readline
 
 N = int(input())
 A = list(map(int, input().split()))
@@ -18,7 +9,7 @@ A = list(map(int, input().split()))
 LIS = []
 
 for a in A:
-    idx = binarySearch(LIS, a)
+    idx = bisect_left(LIS, a)
     
     if idx == len(LIS):
         LIS.append(a)

@@ -1,20 +1,28 @@
 import sys
 
+# Increase recursion limit to avoid RecursionError
 sys.setrecursionlimit(10**6)
+
 input = sys.stdin.readline
 
+# N: number of nodes
+# M: number of edges
+# R: start node
 N, M, R = map(int, input().split())
 
+# edges[i]: list of adjacent nodes of node i
 edges = [[] for _ in range(N + 1)]
 for _ in range(M):
     u, v = map(int, input().split())
     edges[u].append(v)
     edges[v].append(u)
-    
-for i in range(1, N+1):
+
+# Sort adjacency list in ascending order to ensure answers
+for i in range(1, N + 1):
     edges[i].sort()
 
-visited = [0 for _ in range(N+1)]
+# visited[i]: order when node i was visited
+visited = [0 for _ in range(N + 1)]
 order = 1
 
 def dfs(v):
@@ -26,7 +34,9 @@ def dfs(v):
             order += 1
             dfs(x)
 
+# Start DFS
 dfs(R)
 
+# Output visit order for all nodes
 for i in range(1, N + 1):
     print(visited[i])

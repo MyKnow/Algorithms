@@ -1,41 +1,37 @@
-from sys import stdin, stdout
+from sys import stdin
 
 readline = stdin.readline
 
 def getNumber(ch):
-    return ord(ch)-ord("A")+1
+    return ord(ch) - ord("A") + 1
 
 def getString(lst):
-    tmp = ""
-    for l in lst:
-        tmp += chr(l+ord("A")-1)
-    return tmp
+    return "".join(chr(x + ord("A") - 1) for x in lst)
 
 def getPrimaryNumberList(n):
-    result = [1]
+    result = set()
+    for i in range(1, int(n ** 0.5) + 1):
+        if n % i == 0:
+            result.add(i)
+            result.add(n // i)
+    return sorted(result)
 
-    if n > 1:
-        for i in range(2, n+1):
-            if n % i == 0:
-                result.append(i)
-    return result
-    
-plainText = readline().rstrip()
-cipherText = readline().rstrip()
+plain = readline().rstrip()
+cipher = readline().rstrip()
+length = len(plain)
 
-result = []
-for p, c in zip(plainText, cipherText):
-    dif = getNumber(c) - getNumber(p)
-    result.append(dif if dif > 0 else getNumber(c)+26-getNumber(p))
+diffs = [
+    (getNumber(c) - getNumber(p)) % 26 or 26
+    for p, c in zip(plain, cipher)
+]
 
-length = len(plainText)
 for l in getPrimaryNumberList(length):
-    setOfCut = set()
-
-    for i in range(0, length-l+1, l):
-        cut = result[i:i+l]
-        setOfCut.add(getString(cut))
-
-    if len(setOfCut) == 1:
-        print(setOfCut.pop())
+    segment = getString(diffs[:l])
+    valid = True
+    for i in range(0, length, l):
+        if getString(diffs[i:i+l]) != segment:
+            valid = False
+            break
+    if valid:
+        print(segment)
         break

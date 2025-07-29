@@ -1,14 +1,11 @@
 def solution(s):
-    stack = 0
+    count = 0
     for c in s:
         if c == "(":
-            stack += 1
+            count += 1
         else:
-            if stack == 0:
+            if count == 0:
                 return False
-            stack-=1
-            
-    if stack != 0:
-        return False
+            count-=1
     
-    return True
+    return count == 0

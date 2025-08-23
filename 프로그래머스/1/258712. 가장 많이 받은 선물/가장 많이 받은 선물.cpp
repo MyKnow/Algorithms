@@ -42,59 +42,47 @@ int solution(vector<string> friends, vector<string> gifts) {
     for (const auto &gift: gifts) {
         // 공백을 기준으로 주고 받은 사람 분리
         stringstream ss(gift);
-        string people;
-        vector<string> peoples;
-        while(getline(ss, people, ' ')) {
-            peoples.push_back(people);
-        }
-        string gaved, received; tie(gaved, received) = make_pair(peoples[0], peoples[1]);
+        string giver, receiver;
+        ss >> giver >> receiver;
         
         // 1-1. detail_log 업데이트
-        detail_log[gaved][received] += 1;
+        detail_log[giver][receiver] += 1;
         
         // 1-2. numeric_log 업데이트
-        numeric_log[gaved].first += 1;
-        numeric_log[received].second += 1;
+        numeric_log[giver].first += 1;
+        numeric_log[receiver].second += 1;
     }
     
+    // 2. friends를 중복 제거 순회하며 서로의 선물 횟수를 대조 및 result를 업데이트 한다
     map<string, int> result;
-    
-    // 2. friends를 이중 순회하며 서로의 선물 횟수를 대조 및 result를 업데이트 한다
-    for (const auto &gaved_name: friends) {
-        for (const auto &received_name: friends) {
-            if (gaved_name == received_name) { continue; }
-            
-            // gaved_count: gaved_name이 recevied_name에게 선물 준 횟수
-            int gaved_count = detail_log[gaved_name][received_name];
+    for (int i = 0; i < friends.size(); i++) {
+        for (int j = i+1; j < friends.size(); j++) { 
+            string giver_name = friends[i], receiver_name = friends[j];
+            // gaved_count: giver_name이 receiver_name에게 선물 준 횟수
+            int gaved_count = detail_log[giver_name][receiver_name];
                 
-            // received_count: gaved_name이 recevied_name에게 선물 받은 횟수
-            int received_count = detail_log[received_name][gaved_name];
+            // received_count: giver_name이 receiver_name에게 선물 받은 횟수
+            int received_count = detail_log[receiver_name][giver_name];
                         
             // 2-1. 선물을 주고 받은 기록이 있고, count가 같지 않다면, count가 더 높은 사람이 다음 달에 선물을 하나 받는다.
-            if ((gaved_count != 0 || received_count != 0) && gaved_count != received_count) {
-                if (gaved_count > received_count) {
-                    result[gaved_name] += 1;
-                }
+            if (gaved_count != received_count) {
+                if (gaved_count > received_count) result[giver_name]++;
+                else result[receiver_name]++;
             }
             // 2-2. 주고 받은 기록이 없거나, count가 동일하다면 선물 지수가 더 큰 사람이 작은 사람에게 선물을 하나 더 받는다.
             else {
-                // ?_?_numerical: 선물 지수
-                int gaved_gift_numerical = numeric_log[gaved_name].first - numeric_log[gaved_name].second;
-                int received_gift_numerical = numeric_log[received_name].first - numeric_log[received_name].second;
+                // ?_score: 선물 지수
+                int giver_score = numeric_log[giver_name].first - numeric_log[giver_name].second;
+                int receiver_score = numeric_log[receiver_name].first - numeric_log[receiver_name].second;
                     
-                if (gaved_gift_numerical > received_gift_numerical) {
-                    result[gaved_name] += 1;
-                }
+                if (giver_score > receiver_score) result[giver_name]++;
+                else if (giver_score < receiver_score) result[receiver_name]++;
             }
                 
         }
     }
     
-    for (const auto& res: result) {
-        int val = res.second;
-        
-        answer = (answer > val) ? answer : val;
-    }
+    for (const auto& res: result) answer = max(answer, res.second);
     
     return answer;
 }

@@ -1,6 +1,6 @@
 #include <string>
 #include <vector>
-#include <iostream>
+// #include <iostream>
 #include <tuple>
 
 using namespace std;
@@ -50,7 +50,7 @@ int solution(int n, int w, int num) {
     };
     
     // move: 다음 방향으로 이동하는 람다함수
-    auto move = [&](int cx, int cy) {
+    auto move_by_dir = [&](int cx, int cy) {
         return make_pair(cx+directions[v_idx].first, cy+directions[v_idx].second);
     };
     
@@ -71,23 +71,19 @@ int solution(int n, int w, int num) {
         if (i == num) { num_pos = crt_pos; }
         
         // sx, sy: directions에 의해 이동된 위치
-        int sx, sy; tie(sx, sy) = move(cx, cy);
+        int sx, sy; tie(sx, sy) = move_by_dir(cx, cy);
         
         // 만약 다음 이동 시 범위를 벗어나게 된다면, 이전 이동을 취소하고, 한 칸 밑으로 이동한 후 방향을 돌린다.
-        if (!((0 <= sx && sx < w) && (0 <= sy && sy < limit_y))) {
-            crt_pos = make_pair(cx, ++cy);
+        if (!(0 <= sx && sx < w)) {
+            crt_pos = {cx, ++cy};
             next(); 
         }
         // 그렇지 않다면 정상적으로 진행한다.
-        else { crt_pos = make_pair(sx, sy); }
+        else { crt_pos = {sx, sy}; }
     }
     
     // num_pos의 y값을 증가시키며, 0(초기화되지 않은 상자)값이거나 y 범위를 벗어나게 될 때까지의 깊이를 측정한다.
     int answer = 0;
-    cout << limit_y << endl;
-    for (int y = num_pos.second; (warehouse[y][num_pos.first] != 0) && (y < limit_y); y++) { 
-        answer++; 
-        cout << answer << endl;
-    }
+    for (int y = num_pos.second; (warehouse[y][num_pos.first] != 0) && (y < limit_y); y++) { answer++; }
     return answer;
 }

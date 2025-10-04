@@ -21,14 +21,16 @@ def solution(N, stages):
         # 현재 스테이지를 클리어하지 못한 유저 수
         fail = stage_counter[stage]
         
-        # 분모 0 예외처리
+        # 해당 스테이지에 도달한 유저가 없는 경우 실패율 0으로 처리
         if total_players == 0:
             failure_rate = 0
         else:
             failure_rate = fail / total_players
 
+        # 다음 스테이지로 넘어갈 사람들
+        total_players -= fail 
+        
         result.append((stage, failure_rate))
-        total_players -= fail  # 다음 스테이지로 넘어갈 사람들
 
     # 실패율 기준으로 내림차순, 같으면 스테이지 번호 오름차순
     result.sort(key=lambda x: (-x[1], x[0]))

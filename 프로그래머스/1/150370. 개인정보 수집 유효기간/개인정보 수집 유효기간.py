@@ -5,8 +5,6 @@ def getValueFromString(s):
     mm = 28 * mm
     return yyyy+ mm + dd
     
-    
-
 def solution(today, terms, privacies):
     answer = []
     
@@ -23,10 +21,8 @@ def solution(today, terms, privacies):
         
         p_date += addiction
         
-        
         t_date = getValueFromString(today)
         if t_date >= p_date:
             answer.append(idx+1)
             
     return answer
-

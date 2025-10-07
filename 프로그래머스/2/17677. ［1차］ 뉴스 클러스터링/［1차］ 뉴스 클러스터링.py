@@ -14,35 +14,25 @@
 
 from collections import Counter
 
+# 영문자만 존재하는 원소만 다중 집합에 추가한다.
+# 편의를 위해 모든 영문자를 소문자로 치환한다.
+def getMultisetFromString(s):
+    return [s[i:i+2].lower() for i in range(len(s)-1) if s[i:i+2].isalpha()]
+
 def solution(str1, str2):
-    div = 65_536
-    
     # 각 str을 저장할 다중 집합을 리스트로 구현
-    set_1, set_2 = [], []
-    
-    # 각 다중 집합 업데이트
-    # 영문자만 존재하는 원소만 다중 집합에 추가한다.
-    # 편의를 위해 모든 영문자를 소문자로 치환한다.
-    for i in range(len(str1)-1):
-        crt_word = str1[i:i+2]
-        if crt_word.isalpha():
-            set_1.append(crt_word.lower()) 
-    for i in range(len(str2)-1):
-        crt_word = str2[i:i+2]
-        if crt_word.isalpha():
-            set_2.append(crt_word.lower()) 
+    set_1, set_2 = getMultisetFromString(str1), getMultisetFromString(str2)
             
     # 두 다중 집합의 합집합과 교집합을 구한다.
     # 합집합은 두 집합 중 원소 갯수가 더 많은 쪽의 수를 따라간다.(max(a, b))
     # 교집합은 두 집합 중 원소 갯수가 더 적은 쪽의 수를 따라간다.(min(a, b))
+    # 하지만 Counter는 자체적으로 &, | 연산이 가능하다.
     cnt_1 = Counter(set_1)
     cnt_2 = Counter(set_2)
-    
-    union = [max(cnt_1.get(x, 0), cnt_2.get(x, 0)) for x in set(cnt_1) | set(cnt_2)]
-    inter = [min(cnt_1.get(x, 0), cnt_2.get(x, 0)) for x in set(cnt_1) & set(cnt_2)]
+    union = cnt_1 | cnt_2
+    inter = cnt_1 & cnt_2
     
     if not union:
-        return div
-    
-    
-    return int(sum(inter)/sum(union)*65536)
+        # division by zero 방지를 위한 예외처리
+        return 65536
+    return int( sum(inter.values()) / sum(union.values()) * 65536)

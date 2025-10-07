@@ -27,18 +27,11 @@ def solution(id_list, report, k):
         user, reported = r.split(" ")
         reported_dict[reported].add(user)
         
-    # 3. reported_dict를 순회하며, 값이 k 미만인 피신고자를 삭제하며,
-    # k 이상인 피신고자를 신고한 이용자는 user_dict의 값을 증가시킨다.
-    for key, value in reported_dict.copy().items():
-        if len(value) < k:
-            reported_dict.pop(key)
-        else:
+    # 3. reported_dict를 순회하며, 값이 k 이상인 피신고자를 신고한 이용자는 user_dict의 값을 증가시킨다.
+    for key, value in reported_dict.items():
+        if len(value) >= k:
             for user in value:
                 user_dict[user] += 1
         
-    # 4. id_list를 순회하며 user_dict의 키로 사용하여 value를 순서대로 추출한다.
-    answer = []
-    for user in id_list:
-        answer.append(user_dict[user])
-    
-    return answer
+    # 4. id_list 순서대로 값을 반환한다.
+    return [user_dict[user] for user in id_list]

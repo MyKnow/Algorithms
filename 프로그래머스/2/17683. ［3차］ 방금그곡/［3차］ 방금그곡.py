@@ -65,10 +65,10 @@ def solution(m, musicinfos):
         # 재생시간이 음악시간보다 긴 경우
         if melody_len < duration:
             # 남은 시간만큼 melodies를 반복한다.
-            melodies = melodies * (duration // melody_len + 1)
-
-        # 처리되었건 그렇지 않았건, duration만큼 멜로디를 자른다.
-        melodies = melodies[:duration]
+            melodies = melodies * (duration // melody_len) + melodies[:duration % melody_len]
+        # ~보다 짧은 경우, duration만큼 멜로디를 자른다.
+        else:
+            melodies = melodies[:duration]
         
         # in을 통해서 동일 멜로디가 존재하는 지 확인한다.
         # 존재한다면 튜플 업데이트를 시도한다.

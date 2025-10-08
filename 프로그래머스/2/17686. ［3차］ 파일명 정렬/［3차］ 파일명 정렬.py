@@ -23,21 +23,23 @@
 #   1-2. head, number, index를 튜플로 묶어 list(answer)에  저장한다.
 # 2. head, number, index 순서대로 정렬한 answer를 반환한다.
 
-from re import compile, findall
+from re import compile, match
 
 def solution(files):
-    index = 0
+    
+    # 정규표현식: (숫자가 아닌 문자 1자리 이상), (숫자 1자리 이상 5자리 이하)
+    pattern = compile(r"(\D{1,})(\d{1,5})")
+    
+    # 1
     answer = []
-    
-    pattern = compile(r"(\w\D{1,})(\d{1,5})")
-    
-    while index < len(files):
-        file = files[index]
+    for index, file in enumerate(files):
+        # 1-1
+        matched = match(pattern, file)
+        if matched:
+            head, number = matched.groups()
+            
+            # 1-2
+            answer.append( (head.lower(), int(number), index, file))
         
-        head, number = findall(pattern, file)[0]
-        
-        answer.append( (head.lower(), int(number), index, file))
-        
-        index += 1
-        
+    # 2
     return [file[3] for file in sorted(answer, key=lambda x: (x[0], x[1], x[2]))]

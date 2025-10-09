@@ -11,22 +11,13 @@ def solution(relation):
         for comb in combinations(range(col_count), i):
             seen = set()
             
-            for row in relation:
-                value = tuple(row[i] for i in comb)
-                seen.add(value)
-                
-            # 유일성 검증
-            if len(seen) < row_count:
-                continue
-                
             # 최소성 검증
-            flag = True
-            for c in candidates:
-                if set(c).issubset(set(comb)):
-                    flag = False
-                    break
+            if any(set(c).issubset(set(comb)) for c in candidates):
+                continue
             
-            if flag:
+            # 유일성 검증
+            row_set = set(tuple(row[i] for i in comb) for row in relation)
+            if len(row_set) == row_count:
                 candidates.append(set(comb))
                 
     return len(candidates)

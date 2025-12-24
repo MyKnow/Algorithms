@@ -13,18 +13,18 @@ def solution(N, M):
             crt_color = M[y][x]
             if not visited[y][x]:
                 dq = deque([(y, x)])
+                visited[y][x] = True
                 result += 1
 
                 while(dq):
-                    cy, cx = dq.pop()
-                    visited[cy][cx] = True
+                    cy, cx = dq.popleft()
                     
+                    for dy, dx in zip(dir_y, dir_x):
+                        sy, sx = dy+cy, dx+cx
 
-                    for i in range(len(dir_y)):
-                        dy, dx = dir_y[i]+cy, dir_x[i]+cx
-
-                        if (0 <= dy < N) and (0 <= dx < N) and not visited[dy][dx] and crt_color == M[dy][dx]:
-                            dq.append( (dy, dx) )
+                        if (0 <= sy < N) and (0 <= sx < N) and not visited[sy][sx] and crt_color == M[sy][sx]:
+                            dq.append( (sy, sx) )
+                            visited[sy][sx] = True      
 
     print(result)
 

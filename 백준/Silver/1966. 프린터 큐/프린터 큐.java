@@ -15,9 +15,7 @@ public class Main {
 
         int T = Integer.parseInt(br.readLine().trim());
         for (int t=0; t<T; t++) {
-            Queue<Integer> valueQueue = new LinkedList<>();
-            Queue<Integer> indexQueue = new LinkedList<>();
-
+            Queue<int[]> queue = new LinkedList<>();
             StringTokenizer st = new StringTokenizer(br.readLine().trim());
             int N = Integer.parseInt(st.nextToken());
             int targetIndex = Integer.parseInt(st.nextToken());
@@ -27,20 +25,30 @@ public class Main {
             for (int i=0; i<N; i++) {
                 int currentValue = Integer.parseInt(st.nextToken());
                 if (targetIndex == i) targetValue = currentValue;
-                valueQueue.add(currentValue);
-                indexQueue.add(i);
+                queue.add(new int[] {i, currentValue});
             }
 
             int count = 0;
-            while (valueQueue.contains(targetValue) && indexQueue.contains(targetIndex)) {
-                int valueFront = valueQueue.poll();
-                int indexFront = indexQueue.poll();
+            while (!queue.isEmpty()) {
+                int[] front = queue.poll();
+                int index = front[0];
+                int priority = front[1];
+                boolean hasHigher = false;
 
-                if (valueQueue.stream().anyMatch((priority) -> valueFront < priority)) {
-                    valueQueue.offer(valueFront);
-                    indexQueue.offer(indexFront);
+                for (int[] q: queue) {
+                    if (priority < q[1]) {
+                        hasHigher = true;
+                        break;
+                    }
+                }
+
+                if (hasHigher) {
+                    queue.offer(front);
                 } else {
                     count++;
+                    if (index == targetIndex) {
+                        break;
+                    }
                 }
             }
             System.out.println(count);

@@ -19,12 +19,10 @@ public class Main {
             StringTokenizer st = new StringTokenizer(br.readLine().trim());
             int N = Integer.parseInt(st.nextToken());
             int targetIndex = Integer.parseInt(st.nextToken());
-            int targetValue = 0;
 
             st = new StringTokenizer(br.readLine().trim());
             for (int i=0; i<N; i++) {
                 int currentValue = Integer.parseInt(st.nextToken());
-                if (targetIndex == i) targetValue = currentValue;
                 queue.add(new int[] {i, currentValue});
             }
 

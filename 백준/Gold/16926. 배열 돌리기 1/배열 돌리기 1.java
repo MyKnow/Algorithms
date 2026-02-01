@@ -1,89 +1,72 @@
-import java.util.*;
 import java.io.*;
+import java.util.*;
 
 public class Main {
-	static int N;
-	static int M;
-	static int R;
-	static int K;
-	static int[][] A;
-	
-	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-	static StringTokenizer st;
-	static StringBuilder sb = new StringBuilder();
-	
-	static String readLine() throws Exception {
-		String line = br.readLine().trim();
-		st = new StringTokenizer(line);
-		return line;
-	}
-	
-	static int nextInt() {
-		return Integer.parseInt(st.nextToken());
-	}
-	
-	static void printMap() {
-		for (int i=0; i<N; i++) {
-			for (int j=0; j<M; j++) {
-				sb.append(A[i][j]).append(" ");
-			}
-			sb.append("\n");
-		}
-		System.out.println(sb);
-		sb = new StringBuilder();
-	}
-	
-	// 우, 하, 좌, 상
-	static int[] dr = { 0, 1, 0, -1 };
-	static int[] dc = { 1, 0,-1,  0 };
-	static void rotate() {
-		for (int k=0; k<K; k++) {
-			int start_r = k;
-			int start_c = k;
-			int length = 2 * (N-2*k) + 2 * ((M-2*k) - 2);
-			
-			int d = 0;
-			int r = start_r;
-			int c = start_c;
-			int temp = A[start_r][start_c];
-			for (int i=0; i<length; i++) {
-				int nr = r + dr[d];
-				int nc = c + dc[d];
-				
-				if ((nr < start_r || N-k <= nr) || (nc < start_c || M-k <= nc)) {
-					d = (d+1) % 4;
-					i--;
-					continue;
-				} else if (d == 3 && nr == start_r && nc == start_c) {
-					A[r][c] = temp;
-					break;
-				}
-				
-				A[r][c] = A[nr][nc];
-				r = nr;
-				c = nc;
-			}
-		}
-	}
 
-	public static void main(String[] args) throws Exception {
-		readLine();
-		N = nextInt();
-		M = nextInt();
-		R = nextInt();
-		A = new int[N][M];
-		K = Math.min(N, M) / 2;
-		for (int r=0; r<N; r++) {
-			readLine();
-			for (int c=0; c<M; c++) {
-				A[r][c] = nextInt();
-			}
-		}
-		
-		for (int r=0; r<R; r++) {
-			rotate();
-		}
-		
-		printMap();
-	}
+    static int N, M, R;
+    static int[][] A;
+
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+
+        N = Integer.parseInt(st.nextToken());
+        M = Integer.parseInt(st.nextToken());
+        R = Integer.parseInt(st.nextToken());
+
+        A = new int[N][M];
+        for (int i = 0; i < N; i++) {
+            st = new StringTokenizer(br.readLine());
+            for (int j = 0; j < M; j++) {
+                A[i][j] = Integer.parseInt(st.nextToken());
+            }
+        }
+
+        int layers = Math.min(N, M) / 2;
+        for (int k = 0; k < layers; k++) {
+            rotateLayer(k);
+        }
+
+        StringBuilder sb = new StringBuilder();
+        for (int[] row : A) {
+            for (int v : row) {
+                sb.append(v).append(' ');
+            }
+            sb.append('\n');
+        }
+        System.out.print(sb);
+    }
+
+    static void rotateLayer(int k) {
+        int top = k;
+        int left = k;
+        int bottom = N - 1 - k;
+        int right = M - 1 - k;
+
+        int len = 2 * (bottom - top + right - left);
+        int[] tmp = new int[len];
+
+        int idx = 0;
+
+        // 위
+        for (int j = left; j < right; j++) tmp[idx++] = A[top][j];
+        // 오른쪽
+        for (int i = top; i < bottom; i++) tmp[idx++] = A[i][right];
+        // 아래
+        for (int j = right; j > left; j--) tmp[idx++] = A[bottom][j];
+        // 왼쪽
+        for (int i = bottom; i > top; i--) tmp[idx++] = A[i][left];
+
+        int rot = R % len;
+        idx = rot;
+
+        // 위
+        for (int j = left; j < right; j++) A[top][j] = tmp[idx++ % len];
+        // 오른쪽
+        for (int i = top; i < bottom; i++) A[i][right] = tmp[idx++ % len];
+        // 아래
+        for (int j = right; j > left; j--) A[bottom][j] = tmp[idx++ % len];
+        // 왼쪽
+        for (int i = bottom; i > top; i--) A[i][left] = tmp[idx++ % len];
+    }
 }

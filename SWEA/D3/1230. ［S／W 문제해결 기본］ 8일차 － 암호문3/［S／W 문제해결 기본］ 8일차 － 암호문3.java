@@ -33,24 +33,40 @@ class LinkedList {
   }
 
   void addAt(int index, int value) {
-    Node node = new Node(value);
+    addAt(index, new int[] { value });
+  }
+  
+  void addAt(int index, int[] values) {
+    if (values.length == 0) return;
+
+    Node first = new Node(values[0]);
+    Node cur = first;
+    for (int i = 1; i < values.length; i++) {
+      cur.next = new Node(values[i]);
+      cur = cur.next;
+    }
+    Node last = cur;
 
     if (index == 0) {
-      node.next = head;
-      head = node;
-      if (size == 0) tail = node;
-      size++;
+      last.next = head;
+      head = first;
+      if (size == 0) tail = last;
+      size += values.length;
       return;
     }
 
-    Node cur = head;
-    for (int i=0; i<index-1; i++) cur = cur.next;
+    cur = head;
+    for (int i = 0; i < index - 1; i++) {
+      cur = cur.next;
+    }
 
-    node.next = cur.next;
-    cur.next = node;
-    if (node.next == null) tail = node;
-    size++;
+    last.next = cur.next;
+    cur.next = first;
+    if (last.next == null) tail = last;
+
+    size += values.length;
   }
+
 
   void deleteAt(int index, int count) {
     if (count == 0) return;
@@ -116,9 +132,11 @@ public class Solution {
   static void processInsert() throws Exception {
     int x = Integer.parseInt(st.nextToken());
     int y = Integer.parseInt(st.nextToken());
+    int[] values = new int[y];
     for (int j = 0; j < y; j++) {
-      list.addAt(x + j, Integer.parseInt(st.nextToken()));
+      values[j] = Integer.parseInt(st.nextToken());
     }
+    list.addAt(x, values);
   }
   
   static void processDelete() throws Exception {

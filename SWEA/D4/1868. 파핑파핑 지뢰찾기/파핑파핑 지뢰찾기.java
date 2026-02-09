@@ -66,7 +66,7 @@ public class Solution {
         int nr = cr + dr[d];
         int nc = cc + dc[d];
         
-        if (nr < 0 || nr >= N || nc < 0 || nc >= N) continue;
+        if (!isInRange(nr, nc)) continue;
         if (visited[nr][nc]) continue;
         if (map[nr][nc] == '*') continue;
         
@@ -83,10 +83,14 @@ public class Solution {
       int nr = r + dr[d];
       int nc = c + dc[d];
       
-      if (nr < 0 || nr >= N || nc < 0 || nc >= N) continue;
+      if (!isInRange(nr, nc)) continue;
       if (map[nr][nc] == '*') cnt++;
     }
     return cnt;
+  }
+  
+  static boolean isInRange(int nr, int nc) {
+    return (0 <= nr && nr < N && 0 <= nc && nc < N);
   }
   
   public static void main(String[] args) throws Exception {

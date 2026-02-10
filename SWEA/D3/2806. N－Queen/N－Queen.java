@@ -24,13 +24,13 @@ class Solution {
   }
   
   static void dfs(int row) {
-    if (row > N) {
+    if (row >= N) {
       count++;
       return;
     }
     
-    for (int c = 1; c <= N; c++) {
-      int d1 = row - c + N;
+    for (int c = 0; c < N; c++) {
+      int d1 = row - c + N - 1;
       int d2 = row + c;
       
       if (col[c] || diag1[d1] || diag2[d2]) continue;
@@ -52,7 +52,7 @@ class Solution {
     
     for (int t=1; t<=T; t++) {
       init();
-      dfs(1);
+      dfs(0);
       sb.append("#").append(t).append(" ").append(count).append("\n");
     }
     

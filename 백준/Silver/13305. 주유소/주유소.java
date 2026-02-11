@@ -7,20 +7,20 @@ import java.util.StringTokenizer;
 public class Main {
   static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
   static StringBuilder sb = new StringBuilder();
-  static int answer;
+  static long answer;
   
   static int stationsSize;
   static int roadsSize;
-  static int[] roads;
-  static int[] stations;
+  static long[] roads;
+  static long[] stations;
   
   
   static void init() throws Exception {
     stationsSize = Integer.parseInt(br.readLine());
     roadsSize = stationsSize-1;
     
-    roads = new int[roadsSize];
-    stations = new int[stationsSize];
+    roads = new long[roadsSize];
+    stations = new long[stationsSize];
     
     StringTokenizer st = new StringTokenizer(br.readLine());
     for (int i=0; i<roadsSize; i++) {
@@ -36,10 +36,10 @@ public class Main {
   }
   
   static void solve() {
-    int currentPrice = stations[0];
+    long currentPrice = stations[0];
     for (int i=0; i<roadsSize; i++) {
       currentPrice = Math.min(currentPrice, stations[i]);
-      int currentDistance = roads[i];
+      long currentDistance = roads[i];
       answer += currentPrice * currentDistance;
     }
   }

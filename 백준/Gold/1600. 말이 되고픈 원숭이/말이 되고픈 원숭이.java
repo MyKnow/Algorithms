@@ -66,7 +66,7 @@ public class Main {
       }
 
       // 일반 이동
-      for (int d=0; d<4; d++) {
+      for (int d=0; d<dr_monkey.length; d++) {
         int nr = cur.r + dr_monkey[d];
         int nc = cur.c + dc_monkey[d];
 
@@ -80,7 +80,7 @@ public class Main {
 
       // 말 이동
       if (cur.k > 0) {
-        for (int d=0; d<8; d++) {
+        for (int d=0; d<dr_horse.length; d++) {
           int nr = cur.r + dr_horse[d];
           int nc = cur.c + dc_horse[d];
 

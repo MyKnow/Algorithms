@@ -1,3 +1,7 @@
+import sys
+
+input = sys.stdin.readline
+
 # [int] N: Length of A (range(Integer): 2 ≤ N ≤ 11)
 N = int(input())
 

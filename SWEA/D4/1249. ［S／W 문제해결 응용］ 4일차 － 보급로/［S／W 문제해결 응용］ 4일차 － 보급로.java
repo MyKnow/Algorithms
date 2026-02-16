@@ -49,8 +49,8 @@ public class Solution {
       Road currentRoad = pq.poll();
       
       if (currentRoad.r == N-1 && currentRoad.c == N-1) {
-        minTime = Math.min(minTime, currentRoad.sTime);
-        continue;
+        minTime = currentRoad.sTime;
+        return;
       }
       
       if (minTime < currentRoad.sTime) continue;

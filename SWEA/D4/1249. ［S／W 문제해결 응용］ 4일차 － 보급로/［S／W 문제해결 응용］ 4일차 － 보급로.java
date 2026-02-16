@@ -1,7 +1,7 @@
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
-import java.util.ArrayDeque;
+import java.util.PriorityQueue;
 
 public class Solution {
   static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -41,12 +41,12 @@ public class Solution {
   }
   
   static void bfs() {
-    ArrayDeque<Road> queue = new ArrayDeque<>();
-    queue.addLast( new Road(0, 0, 0) );
+    PriorityQueue<Road> pq = new PriorityQueue<>((a, b) -> a.sTime - b.sTime);
+    pq.offer( new Road(0, 0, 0) );
     visited[0][0] = 0;
     
-    while (!queue.isEmpty()) {
-      Road currentRoad = queue.poll();
+    while (!pq.isEmpty()) {
+      Road currentRoad = pq.poll();
       
       if (currentRoad.r == N-1 && currentRoad.c == N-1) {
         minTime = Math.min(minTime, currentRoad.sTime);
@@ -66,7 +66,7 @@ public class Solution {
         if (ns >= ps) continue;
         
         visited[nr][nc] = ns;
-        queue.addLast ( new Road(nr, nc, ns) );
+        pq.offer ( new Road(nr, nc, ns) );
       }
     }
   }

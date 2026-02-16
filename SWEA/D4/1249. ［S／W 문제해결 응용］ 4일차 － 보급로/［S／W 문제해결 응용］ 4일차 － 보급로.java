@@ -40,7 +40,7 @@ public class Solution {
     minTime = Integer.MAX_VALUE;
   }
   
-  static void bfs() {
+  static void dijkstra() {
     PriorityQueue<Road> pq = new PriorityQueue<>((a, b) -> a.sTime - b.sTime);
     pq.offer( new Road(0, 0, 0) );
     visited[0][0] = 0;
@@ -79,7 +79,7 @@ public class Solution {
     T = Integer.parseInt(br.readLine());
     for (int t=1; t<=T; t++) {
       init();
-      bfs();
+      dijkstra();
       sb.append("#").append(t).append(" ").append(minTime).append("\n");
     }
     System.out.print(sb.toString());

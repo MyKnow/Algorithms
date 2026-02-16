@@ -53,6 +53,8 @@ public class Solution {
         continue;
       }
       
+      if (minTime < currentRoad.sTime) continue;
+      
       for (int d=0; d<dr.length; d++) {
         int nr = currentRoad.r + dr[d];
         int nc = currentRoad.c + dc[d];

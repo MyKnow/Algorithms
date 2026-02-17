@@ -9,9 +9,12 @@ public class Main {
   final static int PAPER_SIZE = 10;
   final static int COLOR_PAPER_SIZE = 5;
   final static int COLOR_PAPER_COUNT = 5;
+  
   static int minUsed;
   static boolean[][] paper;
   static int[] colorPaper;
+  static int maxCoverableArea;
+  static int remainPaperCount;
   
   static class Coordinate {
     int r, c;
@@ -23,16 +26,20 @@ public class Main {
   
   static void init() throws Exception {
     paper = new boolean[PAPER_SIZE][PAPER_SIZE];
+    remainPaperCount = 0;
     for (int r=0; r<PAPER_SIZE; r++) {
       StringTokenizer st = new StringTokenizer(br.readLine());
       for (int c=0; c<PAPER_SIZE; c++) {
         paper[r][c] = (Integer.parseInt(st.nextToken()) == 1);
+        if (paper[r][c]) remainPaperCount++;
       }
     }
     
     colorPaper = new int[COLOR_PAPER_SIZE+1];
-    for (int i=1; i<=COLOR_PAPER_SIZE; i++) {
-      colorPaper[i] = COLOR_PAPER_COUNT;
+    maxCoverableArea = 0;
+    for (int size=1; size<=COLOR_PAPER_SIZE; size++) {
+      colorPaper[size] = COLOR_PAPER_COUNT;
+      maxCoverableArea += COLOR_PAPER_COUNT * size * size;
     }
     minUsed = Integer.MAX_VALUE;
   }
@@ -45,6 +52,7 @@ public class Main {
   
   static void backtracking(int used) {
     if (used >= minUsed) return;
+    if (remainPaperCount > maxCoverableArea) return;
     
     Coordinate coords = findNextCoords();
     if (coords == null) {
@@ -73,8 +81,7 @@ public class Main {
   }
   
   static boolean canAttachAt(int r, int c, int size) {
-    int remainPaper = colorPaper[size];
-    if (remainPaper <= 0) {
+    if (colorPaper[size] <= 0) {
       return false;
     }
     
@@ -90,18 +97,22 @@ public class Main {
   
   static void attachAt(int r, int c, int size) {
     colorPaper[size]--;
+    maxCoverableArea -= size * size;
     for (int dr=0; dr<size; dr++) {
       for (int dc=0; dc<size; dc++) {
         paper[r+dr][c+dc] = false;
+        remainPaperCount--;
       }
     }
   }
   
   static void detachAt(int r, int c, int size) {
     colorPaper[size]++;
+    maxCoverableArea += size * size;
     for (int dr=0; dr<size; dr++) {
       for (int dc=0; dc<size; dc++) {
         paper[r+dr][c+dc] = true;
+        remainPaperCount++;
       }
     }
   }

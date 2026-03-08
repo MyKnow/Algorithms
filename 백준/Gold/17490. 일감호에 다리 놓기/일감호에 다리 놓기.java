@@ -10,12 +10,12 @@ public class Main {
   static StringBuilder sb = new StringBuilder();
 
   static int N, M;
-  static long K;
+  static long K, sum;
 
   static int[] parent;
   static List<Edge> edges;
 
-  static class Edge {
+  static class Edge implements Comparable<Edge> {
     int u, v;
     long w;
 
@@ -23,6 +23,11 @@ public class Main {
       this.u = u;
       this.v = v;
       this.w = w;
+    }
+    
+    @Override
+    public int compareTo(Edge e) {
+      return Long.compare(this.w, e.w);
     }
   }
 
@@ -34,7 +39,6 @@ public class Main {
     K = Long.parseLong(st.nextToken());
 
     parent = new int[N+1];
-
     for (int i=1;i<=N;i++) parent[i] = i-1;
     parent[1] = N;
 
@@ -42,7 +46,7 @@ public class Main {
     edges = new ArrayList<>();
     for (int i=1;i<=N;i++) {
       long w = Long.parseLong(st.nextToken());
-      edges.add(new Edge(0,i,w));
+      edges.add(new Edge(0, i, w));
     }
 
     for (int i=0;i<M;i++) {
@@ -60,6 +64,8 @@ public class Main {
 
       parent[max] = max;
     }
+    
+    sum = 0;
   }
 
   static int find(int x) {
@@ -68,36 +74,30 @@ public class Main {
   }
 
   static boolean union(int a,int b) {
-    int pa = find(a);
-    int pb = find(b);
-
-    if (pa==pb) return false;
-
-    parent[pa] = pb;
+    a = find(a);
+    b = find(b);
+    if (a==b) return false;
+    parent[a] = b;
     return true;
   }
 
   static void solve() {
-
     if (M<=1) {
       sb.append("YES");
       return;
     }
-
-    Collections.sort(edges,(a,b)->Long.compare(a.w,b.w));
-
-    long sum = 0;
-
+    
+    Collections.sort(edges);
     for (Edge e: edges) {
-      if (union(e.u,e.v)) sum += e.w;
+      if (union(e.u, e.v)) sum += e.w;
     }
-
-    sb.append(sum>K?"NO":"YES");
+    
+    sb.append(sum<=K ? "YES" : "NO");
   }
 
   public static void main(String[] args) throws Exception {
     init();
     solve();
-    System.out.println(sb);
+    System.out.println(sb.toString());
   }
 }

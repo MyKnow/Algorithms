@@ -120,16 +120,14 @@ public class Main {
 
     if (node.fork != null) {
       node = node.fork;
-      move--;
     } else {
       node = node.next;
-      move--;
     }
+    move--;
 
-    while (move-- > 0 && node != finish) {
+    while (move --> 0 && node != finish) {
       node = node.next;
     }
-
     return node;
   }
 

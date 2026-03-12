@@ -12,7 +12,10 @@ public class Main {
   
   static int N, M, X;
   static List<Edge>[] edge;
-  static int[][] minDist;
+  static List<Edge>[] reverseEdge;
+  
+  static int[] distFromX;
+  static int[] distToX;
   
   static class Edge implements Comparable<Edge> {
     int to, dist;
@@ -30,59 +33,67 @@ public class Main {
   
   static void init() throws Exception {
     StringTokenizer st = new StringTokenizer(br.readLine());
+    
     N = Integer.parseInt(st.nextToken());
     M = Integer.parseInt(st.nextToken());
     X = Integer.parseInt(st.nextToken());
     
     edge = new ArrayList[N+1];
-    minDist = new int[N+1][N+1];
+    reverseEdge = new ArrayList[N+1];
+    
     for (int i=1; i<=N; i++) {
       edge[i] = new ArrayList<>();
-      Arrays.fill(minDist[i], Integer.MAX_VALUE);
+      reverseEdge[i] = new ArrayList<>();
     }
     
     for (int i=0; i<M; i++) {
       st = new StringTokenizer(br.readLine());
+      
       int from = Integer.parseInt(st.nextToken());
       int to = Integer.parseInt(st.nextToken());
       int dist = Integer.parseInt(st.nextToken());
       
-      edge[from].add( new Edge(to, dist) ); 
+      edge[from].add(new Edge(to, dist));
+      reverseEdge[to].add(new Edge(from, dist));
     }
   }
   
   static void solve() {
-    for (int i=1; i<=N; i++) {
-      dijkstra(i);
-    }
+    distFromX = dijkstra(edge, X);
+    distToX = dijkstra(reverseEdge, X);
     
     int answer = 0;
     for (int i=1; i<=N; i++) {
-      answer = Math.max(answer, minDist[i][X] + minDist[X][i]);
+      answer = Math.max(answer, distFromX[i] + distToX[i]);
     }
+    
     sb.append(answer).append("\n");
   }
   
-  static void dijkstra(int start) {
-    PriorityQueue<Edge> pq = new PriorityQueue<>();
-    pq.add( new Edge(start, 0) );
-    minDist[start][start] = 0;
+  static int[] dijkstra(List<Edge>[] graph, int start) {
+    int[] dist = new int[N+1];
+    Arrays.fill(dist, Integer.MAX_VALUE);
     
-    while(!pq.isEmpty()) {
+    PriorityQueue<Edge> pq = new PriorityQueue<>();
+    pq.add(new Edge(start, 0));
+    dist[start] = 0;
+    
+    while (!pq.isEmpty()) {
       Edge cur = pq.poll();
-      int curDist = cur.dist;
       
-      if (curDist < minDist[start][cur.to]) {
-        minDist[start][cur.to] = curDist;
-      }
+      if (cur.dist > dist[cur.to]) continue;
       
-      for (Edge next: edge[cur.to]) {
-        int nextDist = curDist + next.dist;
+      for (Edge next : graph[cur.to]) {
+        int nextDist = cur.dist + next.dist;
         
-        if (nextDist >= minDist[start][next.to]) continue;
-        pq.add( new Edge(next.to, nextDist) );
+        if (nextDist >= dist[next.to]) continue;
+        
+        dist[next.to] = nextDist;
+        pq.add(new Edge(next.to, nextDist));
       }
     }
+    
+    return dist;
   }
   
   public static void main(String[] args) throws Exception {
